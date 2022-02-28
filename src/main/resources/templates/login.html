@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <title>Spring Security</title>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/loginFront.css}"/>
+    <script type="text/javascript" th:src="@{/static/js/actions.js}"></script>
+
+</head>
+<body>
+<div th:replace="fragments/theme :: theme"></div>
+
+<div class="container mt-5">
+
+    <div class="col-md-5 mx-auto">
+        <div class="alert alert-info text-center" th:if="${message != null}" th:text="${message}">
+        </div>
+    </div>
+
+
+    <div th:replace="fragments/common :: logForm(operation='Sign in', path='/login', isRegForm = true)"></div>
+
+</div>
+</body>
+</html>

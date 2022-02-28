@@ -1,0 +1,55 @@
+spring:
+#  Migration DB
+  flyway:
+    baselineOnMigrate: 'true'
+  main:
+    allow-bean-definition-overriding: true
+
+#    Sending Mail
+  mail:
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: 'true'
+          auth: 'true'
+
+    host: smtp.mailtrap.io
+    username: 443bee5f602241
+    password: b9ce3f97c923fb
+    port: '2525'
+
+#    Database Mysql
+  datasource:
+    password: '12345'
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    url: jdbc:mysql://localhost:3306/newtork
+  jpa:
+    hibernate:
+      ddl-auto: update
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+        SQL: DEBUG
+
+#Load image
+upload:
+  path: /C:/Users/ххх/Desktop/social-network/images
+server:
+  port: '8081'
+
+#ReCaptcha
+google:
+  recaptcha:
+    key:
+#      site: 6LdK7DEeAAAAALJsBdItsNM-HlZNhzGBcgGhEmbB
+      secret: 6LdK7DEeAAAAAMYxj0-gyAnEqlwtji-BbigukoQE
+
+
+

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/users.css}"/>
+
+</head>
+<body>
+<div th:replace="fragments/theme :: theme"></div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8" th:each="user : ${users}" >
+            <div class="people-nearby">
+
+                <div class="nearby-user">
+                    <div class="row">
+                        <div class="col-md-2 col-sm-2">
+                            <img th:if= "${user.avatarName} == null"
+                                 th:src="@{/static/icons/avatar.png}" alt="user" class="profile-photo-lg">
+                            <img th:if= "${user.avatarName} != null"
+                                 th:src="@{/static/icons/{av}(av=${user.avatarName})}" alt="user" class="profile-photo-lg">
+                        </div>
+                        <div class="col-md-7 col-sm-7">
+                            <h5><a th:href="@{/message/{id}/0(id=${user.id})}" class="profile-link" th:text="*{user.name}"></a></h5>
+                            <p th:text="*{user.email}"></p>
+                            <p sec:authorize="hasAuthority('ADMIN')" th:text="*{user.role}"></p>
+                        </div>
+                        <div class="col-md-3 col-sm-3" th:if="${user.name} != ${#authentication.principal.name}"
+                             th:with="adm= ${#authentication.principal}">
+
+                            <a th:if="${#lists.contains(user.subscribers, adm)} != true"
+                               class="btn btn-success pull-right" th:href="@{/user/follow/{id}(id=${user.id})}">Follow</a>
+                            <a th:if="${#lists.contains(user.subscribers, adm)} == true"
+                               class="btn btn-danger pull-right" th:href="@{/user/unfollow/{id}(id=${user.id})}">Unfollow</a>
+
+                        </div>
+                        <div class="col-md-3 col-sm-3 ml-3 mt-1">
+                            <a class="btn btn-primary pull-right" sec:authorize="hasAuthority('ADMIN')" th:href="@{/user/profile/{id}(id=${user.id})}">Edit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

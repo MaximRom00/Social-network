@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"/>
+
+</head>
+<body>
+<div th:fragment="navbar" >
+
+    <!-- Navigation -->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" >
+    <a class="navbar-brand" href="/">Hello</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/main/0">Messages</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/message/byTag">All messages by tag</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/user" >Users</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/profile/{id}(id=${#authentication.principal.id})}" sec:authorize="isAuthenticated()">EditProfile</a>
+            </li>
+            <li class="nav-item">
+                <div sec:authorize="isAuthenticated()">
+                    <div class="container" th:with="uid = ${#authentication.principal.id}">
+                        <a class="nav-link" th:href="@{/message/{id}/0(id=${uid})}">User Profile</a>
+                    </div>
+                </div>
+
+            </li>
+
+        </ul>
+
+        <div sec:authorize="isAuthenticated()">
+        <nav class="navbar  mr-sm-5 ">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list-4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbar-list-4">
+                <ul class="navbar-nav">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img th:if= "${#authentication.principal.avatarName} == null"
+                                 th:src="@{/static/icons/avatar.png}" alt="logo" width="50" height="50" class="rounded-circle"/>
+                               <img th:if= "${#authentication.principal.avatarName} != null"
+                                    th:src="@{/static/icons/{av}(av=${#authentication.principal.avatarName})}" alt="logo" width="50" height="50" class="rounded-circle"/>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                           <h3 class="mx-lg-5">
+                               <span class="badge badge-secondary align-middle" sec:authentication="name" ></span>
+                           </h3>
+                            <a class="dropdown-item" th:href="@{/main/0}">Main page</a>
+                            <a class="dropdown-item" th:href="@{/user/profile/{id}(id=${#authentication.principal.id})}">Edit Profile</a>
+                            <a class="dropdown-item" href="javascript: document.logoutForm.submit()" role="menuitem"> Sign Out</a>
+                            <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+                                <input  type="submit" value="Sign Out"/>
+                            </form>
+
+                        </div>
+                </ul>
+            </div>
+        </nav>
+        </div>
+    </div>
+</nav>
+</div>
+</body>
+</html>

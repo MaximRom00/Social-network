@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" th:src="@{/static/js/actions.js}"></script>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/style.css}"/>
+
+</head>
+<body>
+<div th:replace="fragments/theme :: theme"></div>
+
+<div th:fragment="list">
+
+    <div class="container mt-3" th:each="mes : ${message}">
+
+        <div class="d-flex justify-content-center row">
+            <div class="col-md-8 ">
+                <div class="d-flex flex-column comment-section border">
+                    <div class="bg-white p-2 ">
+                        <div class="d-flex flex-row user-info">
+                            <img th:if= "${mes.author.avatarName} == null"
+                                 th:src="@{/static/icons/avatar.png}" width="43" height="43" class="rounded-circle" alt="Avatar"/>
+                            <img th:if= "${mes.author.avatarName} != null"
+                                 th:src="@{/static/icons/{av}(av=${mes.author.avatarName})}" width="43" height="43" class="rounded-circle" alt="Avatar"/>
+                            <div class="d-flex flex-column justify-content-start ml-2">
+                                <span class="d-block font-weight-bold name" th:text="${mes.author.name}"></span>
+                                <span class="date text-black-50" th:text="${mes.tag}"></span>
+                            </div>
+
+                        </div>
+
+                        <div class="mb-1">
+                            <!--   User can change only their messages. Html for edit icon.       -->
+                            <div th:if="${#httpServletRequest.requestURL == 'http://localhost:8081/main'}">
+                                <div class=container th:with="name = ${#authentication.principal.name}">
+                                    <a th:href="@{message/{id}(id=${mes.author.id})}" th:if="${name == mes.author.name}"><i class="fas fa-edit d-flex justify-content-sm-end"></i></a>
+                                </div>
+                            </div>
+                            <!--            -->
+
+                            <!--      Code for deleting and updating, only for authorization user.      -->
+                            <div th:if="${#httpServletRequest.requestURL != 'http://localhost:8081/main'}" th:with="name = ${#authentication.principal.name}">
+                                <div th:if="${name} == ${mes.author.name}">
+                                    <a th:href="@{/message/delete/{id}(id=${mes.id})}" onclick="if(!(confirm('Are you sure?'))) return false">
+                                        <span class="fas fa-trash-alt float-right mb-1"></span>
+                                    </a>
+                                    <span class="fas fa-pencil-alt float-right mt-2 mr-2" data-toggle="modal" th:attr="data-target='#exampleModal' + *{mes.id}"></span>
+                                </div>
+                            </div>
+                            <!--            -->
+                        </div>
+
+                        <div th:if= "${mes.fileName != null}">
+                            <img th:src="@{/img/{filename}(filename =  ${mes.fileName})}" id="small-avatar" class="card-img-top" height="300"/>
+                        </div>
+                        <div class="m-2" >
+                            <p th:text="${mes.text}"></p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white d-flex flex-row fs-12 border-bottom">
+                        <div class="d-flex flex-row fs-12 ">
+
+                            <a th:href="@{/message/{id}/like(id=${mes.id})}" th:with="usr = ${#authentication.principal}">
+                                <div class="like p-2 cursor">
+                                    <i class="fas fa-thumbs-up" th:if="${#lists.contains(mes.likes, usr)} == true"></i>
+                                    <i class="far fa-thumbs-up" th:if="${#lists.contains(mes.likes, usr)} != true"></i>
+                                    <span class="ml-1">Like</span>
+                                </div>
+                            </a>
+                            <div class="like p-2 cursor" th:text="${#lists.size(mes.likes)}"></div>
+
+                            <a th:href="@{/message/{id}/dislike(id=${mes.id})}" th:with="usr = ${#authentication.principal}">
+                                <div class="like p-2 cursor">
+                                    <i class="fas fa-thumbs-down" th:if="${#lists.contains(mes.dislikes, usr)} == true"></i>
+                                    <i class="far fa-thumbs-down" th:if="${#lists.contains(mes.dislikes, usr)} != true"></i>
+                                    <span class="ml-1">Dislike</span>
+                                </div>
+                            </a>
+                            <div class="like p-2 cursor" th:text="${#lists.size(mes.dislikes)}"></div>
+                        </div>
+
+                        <!--                Form for edit message.-->
+                        <form th:action="@{/main}" method="post" enctype="multipart/form-data">
+                            <div class="modal fade" th:id="*{'exampleModal'+{mes.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&#215;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <input type="hidden" class="form-control" id="id" name="id" th:value="*{mes.id}"  />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="text" class="col-form-label">Text:</label>
+                                                <input type="text" class="form-control" id="text" name="text" th:value="*{mes.text}"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="tag" class="col-form-label">Tag:</label>
+                                                <input type="text" class="form-control" id="tag" name="tag" th:value="*{mes.tag}" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>
+                                                    <input type="file" name="file"/>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <input type="submit" class="btn btn-success" value="Save"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                    <div class="bg-white p-2" th:if="${not #lists.isEmpty(mes.comments)}">
+                        <ul class="media-list">
+                            <li class="media" th:each="com : ${mes.comments}">
+                                <div class="mt-2"  >
+                                    <div class="d-flex flex-row align-items-start">
+                                        <img th:if= "${mes.author.avatarName} == null"
+                                             th:src="@{/static/icons/avatar.png}" width="43" height="43" class="rounded-circle" alt="Avatar"/>
+                                        <img th:if= "${mes.author.avatarName} != null"
+                                             th:src="@{/static/icons/{av}(av=${mes.author.avatarName})}" width="43" height="43" class="rounded-circle" alt="Avatar"/>
+
+                                        <div class="d-flex flex-column justify-content-start ml-2" >
+                                            <span class="d-block font-weight-bold name" th:text="${mes.author.name}"></span>
+                                            <span class="d-block font-weight-bold datename"  th:text="${com.timestamp.year} + '-' + ${com.timestamp.MonthValue} + '-' + ${com.timestamp.DayOfMonth}"></span>
+                                            <span class="d-block font-weight-bold datename"  th:text="${com.timestamp.hour} + ':' + ${com.timestamp.minute} + ':' + ${com.timestamp.second}"></span>
+                                        </div>
+
+                                    </div>
+                                    <a th:href="@{/message/delete/comment/{id}(id=${com.id})}" onclick="if(!(confirm('Are you sure?'))) return false">
+                                        <span class="float-right " aria-hidden="true">&#215;</span>
+                                    </a>
+                                    <br>
+
+                                    <p class="comment-text" th:text="${com.text}"></p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-light p-2">
+
+                        <form action="#" th:method="POST" th:action="@{/main/comment}">
+
+                            <div class="d-flex flex-row align-items-start mb-3 ml-3">
+                                <img class="rounded-circle" src="https://i.imgur.com/RpzrMR2.jpg" width="40">
+                            </div>
+
+                                <div class="form-group">
+                                    <textarea type="text" class="form-control ml-1 shadow-none textarea" th:value="*{text}" name="text" placeholder="Write a text..."></textarea>
+                                    <input type="hidden" class="form-control" th:value="*{mes.id}" name="id">
+
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Добавить</button>
+                                    <button type="reset" class="btn btn-danger">Скинуть</button>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

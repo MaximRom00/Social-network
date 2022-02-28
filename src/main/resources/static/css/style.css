@@ -1,0 +1,40 @@
+.fa-edit{
+    font-size: 22px;
+}
+.fa-trash-alt{
+    font-size: 22px;
+    color: darkblue;
+    width: fit-content;
+}
+
+.date {
+    font-size: 15px
+}
+.comment-text {
+    font-size: 12px
+}
+.fs-12 {
+    font-size: 12px
+}
+.shadow-none {
+    box-shadow: none
+}
+.name {
+    font-size: 17px;
+    color: #010810
+}
+.datename{
+    font-size: 11px;
+    color: #9a9a9a
+}
+.cursor:hover {
+    color: blue
+}
+.cursor {
+    cursor: pointer
+}
+.textarea {
+    resize: none
+}
+
+

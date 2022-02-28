@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/loginFront.css}"/>
+</head>
+<body>
+
+<div th:fragment="logForm (operation, path, isRegForm)" >
+    <section class="container">
+        <div class="row content d-flex justify-content-center">
+            <div class="col-md-5">
+                <div class="box shadow bg-white p-4">
+                    <h3 class="mb-4 text-center fs-1"th:if="${isRegForm}">Please, Login</h3>
+                    <h3 class="mb-4 text-center fs-1" th:if="${!isRegForm}">Create Account</h3>
+                    <form class="mb-3" th:action="@{${path}}" method="post" th:object="${user}">
+
+                        <div class="alert alert-danger text-center" th:if="${param.error}">
+                            Invalid username or password.
+                        </div>
+                        <div class="alert alert-primary text-center" th:if="${param.logout}">
+                            You have been logged out.
+                        </div>
+
+                        <div class="form-floating mb-3" th:if="${isRegForm}">
+                            <label>User name:</label>
+                            <input type="text" class="form-control" name="username" placeholder="User name...">
+                        </div>
+                        <div class="form-floating mb-3" th:if="${isRegForm}">
+                            <label>Password:</label>
+                            <input type="password" class="form-control"  name="password"  placeholder="Password..." id="myInput">
+                            <input type="checkbox" onclick="showPassword()">Show Password
+                        </div>
+                        <div class="form-check" th:if="${isRegForm}">
+                            <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me">
+                            <label class="form-check-label" for="remember-me">Remember me?</label>
+                        </div>
+
+                        <!--                             Form for registration           -->
+
+                        <div th:if="${!isRegForm}">
+                            <div class="form-floating mb-3" >
+                                <label>User name::</label>
+                                <input type="name" class="form-control" name="name" th:value="*{name}" placeholder="User name..." th:errorclass="is-invalid"/>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                            </div>
+
+                            <div class="form-floating mb-3" >
+                                <label>Password:</label>
+                                <input type="password" class="form-control" name="password" th:value="*{password}" placeholder="Password..." th:errorclass="is-invalid"/>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                            </div>
+                            <div class="form-floating mb-3" >
+                                <label>Repeat password:</label>
+                                <input type="password" class="form-control" name="rpassword" th:value="*{rpassword}" placeholder="Repeat your password..." th:errorclass="is-invalid"/>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('rpassword')}" th:errors="*{rpassword}"></div>
+                            </div>
+
+                            <div class="form-floating mb-3" >
+                                <label>Email:</label>
+                                <input type="email" class="form-control" name="email" th:value="*{email}" placeholder="Email..." th:errorclass="is-invalid"/>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                            </div>
+
+                            <div>
+                                <div class="g-recaptcha" data-sitekey="6LfVCzUeAAAAAGFZl0x3GDC-0WcMH3XJ_6fLFfj6"></div>
+                            </div>
+
+                            <div th:if="${captchaError} ">
+                                <p th:text="${captchaError}" class="alert alert-danger" ></p>
+                            </div>
+                        </div>
+
+                        <!--        end form for registration          -->
+
+                        <div class="form-floating mb-3">
+                            <input type="submit" class="btn btn-dark form-control" th:value="${operation}"/>
+                        </div>
+                        <div class="forgot-password-link mb-3">
+                            <a href="#" title="Forgot Password" class="text-decoration-none">Forgot Password</a>
+                        </div>
+                        <div class="forgot-password-link mb-3" th:if="${!isRegForm}">
+                            <a href="history.go(-1)" title="Back" class="text-decoration-none">Back</a>
+                        </div>
+                    </form>
+                    <div class="sign-up-accounts">
+                        <div class="account d-flex justify-content-center" th:if="${isRegForm}">
+                            <a th:href="@{/registration}">Sign Up</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="fragments/theme :: theme"></div>
+
+<h1 th:text="*{method}" class="display-3 text-center"></h1>
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-3 col-sm-3 col8 mb-3 mt-2" th:each="user : ${list}">
+            <div class="card radius-15">
+                <div class="card-body text-center">
+                    <img th:if= "${user.avatarName} == null"
+                         th:src="@{/static/icons/avatar.png}" width="100" height="100" class="rounded-circle" alt="Avatar"/>
+                    <img th:if= "${user.avatarName} != null"
+                         th:src="@{/static/icons/{av}(av=${user.avatarName})}" width="100" height="100 mt-2 ml-1" class="rounded-circle" alt="Avatar"/>
+                    <h5 class="mb-0 mt-2" th:text="*{user.name}"></h5>
+                    <p class="mb-3" th:text="*{user.email}"></p>
+                    <div class="d-grid"> <a th:href="@{/message/{id}/0(id=${user.id})}"  class="btn btn-outline-primary radius-15">My Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

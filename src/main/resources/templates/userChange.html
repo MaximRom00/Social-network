@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://kit.fontawesome.com/e36f939b0f.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/style.css}"/>
+</head>
+<body>
+<div th:replace="fragments/theme :: theme"></div>
+     <form th:action="@{/user}" method="post" th:object="${user}">
+
+        <div>
+            <label><input type="hidden" name="id" th:value="${user.id}"/></label>
+        </div>
+
+        <div>
+             <label>Name:
+                 <input type="text" name="name" th:value="${user.name}">
+             </label>
+        </div>
+        <div>
+             <label>Email:
+                 <input type="text" name="email" th:value="${user.email}">
+             </label>
+        </div>
+
+        <label>Roles:
+             <input type="radio" name="role"
+                th:each="role : ${roles}"
+                th:text="${role.name}"
+                th:value="${role.name}"
+              />
+        </label>
+     <br>
+     <button type="submit">Save</button>
+
+ </form>
+
+</body>
+</html>

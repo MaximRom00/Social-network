@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/st.css}"/>
+
+</head>
+<body>
+<div th:replace="fragments/theme :: theme"></div>
+<div class="container mt-5">
+    <form th:method="POST" th:action="@{/user/profile}" th:object="${user}" enctype="multipart/form-data">
+        <div class="row content d-flex justify-content-center">
+            <div class="col-md-5">
+                <div class="box shadow bg-white p-4">
+                    <form class="mb-3">
+
+                        <div class="form-floating mb-3">
+                            <label>User name:</label>
+                            <input class="form-control" type="text" name="name" th:value="*{name}" placeholder="User name..." th:errorclass="is-invalid">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <label>Password:</label>
+                            <input type="password" class="form-control" th:value="*{password}" name="password"  placeholder="Password..." th:errorclass="is-invalid">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+
+                        </div>
+                        <div class="form-floating mb-3">
+                            <label>Email:</label>
+                            <input type="email" class="form-control" th:value="*{email}" name="email"  placeholder="Email..." th:errorclass="is-invalid">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                        </div>
+                        <label class="float-right" sec:authorize="hasAuthority('ADMIN')">Roles:
+                            <input type="radio" name="role"
+                                   th:each="role : ${roles}"
+                                   th:text="${role.name}"
+                                   th:value="${role.name}"
+                            />
+                        </label>
+                        <div class="personal-photo">
+<!--                            <a class="remove-image" href="#" style="display: inline;">&#215;</a>-->
+                            <img th:if= "${user.avatarName} != null" th:src="@{/static/icons/{avatar}(avatar=${avatar})}" id="avatar">
+                            <img th:if= "${user.avatarName} == null" th:src="@{/static/icons/avatar.png}" id="photo">
+<!--                            <img th:if="${user.avatarName} != ${user.avatarName}" th:src="@{/static/icons/{avatar}(avatar=${avatar})}" id="avatar">-->
+
+                            <input type="file" id="file" name="file">
+                            <label for="file" id="uploadBtn">Choose Photo</label>
+                        </div>
+                        <input type="hidden" class="form-control" th:value="*{id}" name="id">
+                        <input type="hidden" class="form-control" th:value="*{role}" name="role">
+                        <input type="hidden" class="form-control" th:value="*{isActive}" name="isActive">
+                        <input type="hidden" class="form-control" th:value="*{avatarName}" name="avatarName">
+
+                        <script type="text/javascript" th:src="@{/static/js/actions.js}" ></script>
+
+                        <button class="btn btn-primary" type="submit">Save</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

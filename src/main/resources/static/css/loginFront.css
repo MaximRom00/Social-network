@@ -1,0 +1,39 @@
+body{
+    font-family: 'Poppins', sans-serif;
+    background-image: linear-gradient(90deg, #9C27B0, #673AB7);
+}
+.content{
+    height: 100vh;
+}
+.btn-dark{
+    background: #673AB7 !important;
+}
+#rcorners1 {
+    border-radius: 25px;
+    background: #73AD21;
+    padding: 20px;
+    width: 200px;
+    height: 150px;
+}
+
+
+
+/*!*@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');*!*/
+/*body{*/
+/*    font-family: 'Poppins', sans-serif;*/
+/*    background-image: linear-gradient(90deg, #9C27B0, #673AB7);*/
+/*}*/
+/*.content{*/
+/*    height: 100vh;*/
+/*}*/
+/*.btn-dark{*/
+/*    background: #673AB7 !important;*/
+/*}*/
+/*#rcorners1 {*/
+/*    border-radius: 25px;*/
+/*    background: #73AD21;*/
+/*    padding: 20px;*/
+/*    width: 200px;*/
+/*    height: 150px;*/
+/*}*/
+

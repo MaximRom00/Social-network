@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="saveMessage" >
+
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+        Add new message
+    </a>
+
+    <div class="collapse" id="collapseExample" th:classappend="${mess.text!=null} ? show : ''">
+
+        <div class="form-group mt-3">
+            <form action="#" th:method="POST" th:action="@{/main}" th:object="${mess}" enctype="multipart/form-data">
+                <div class="form-group">
+
+                    <input type="text" class="form-control " th:field="*{text}" placeholder="Write a text" th:errorclass="is-invalid"/>
+
+                    <div th:if="${#fields.hasErrors('text')}" class="invalid-feedback" th:errors="*{text}"></div>
+
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control " th:field="*{tag}" placeholder="Write a tag" th:errorclass="is-invalid"/>
+
+                    <div th:if="${#fields.hasErrors('tag')}" class="invalid-feedback" th:errors="*{tag}"></div>
+
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="file" name="file"/>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Добавить</button>
+                    <button type="reset" class="btn btn-danger">Скинуть</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
