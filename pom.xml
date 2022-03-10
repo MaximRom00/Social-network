@@ -14,8 +14,9 @@
 	<name>social-network</name>
 	<description>Social Network</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>14</java.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
