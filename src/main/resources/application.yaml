@@ -21,10 +21,13 @@ spring:
 
 #    Database Mysql
   datasource:
-    password: '12345'
+    password: '7256cfe8'
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    url: jdbc:mysql://localhost:3306/newtork
+    username: b8b179ce2148bf
+#    url: jdbc:mysql://localhost:3306/newtork
+    url: jdbc:mysql://us-cdbr-east-05.cleardb.net:3306/heroku_f48654262066e24
+    hikari:
+      max-lifetime: 20000
   jpa:
     hibernate:
       ddl-auto: update
