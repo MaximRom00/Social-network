@@ -28,6 +28,7 @@ public class UserService implements UserDetailsService {
     private final PasswordEncoder encoder;
 
     public void saveUser(User user){
+        user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
@@ -49,9 +50,9 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean addUser(User user){
-        User userByName = userRepository.findByName(user.getName());
+        User userByEmail = userRepository.findByEmail(user.getEmail());
 
-        if (userByName != null){
+        if (userByEmail != null){
             return false;
         }
 
@@ -95,9 +96,9 @@ public class UserService implements UserDetailsService {
         saveUser(user);
     }
 
+
     private void sendMessage(User user) {
         SecureToken secureToken = new SecureToken(user);
-
 
         confirmationTokenRepository.save(secureToken);
 
@@ -109,6 +110,30 @@ public class UserService implements UserDetailsService {
             mailSender.send(user.getEmail(), "Activation code", message);
         }
     }
+
+    public boolean resetPasswordMessage(String email, String code){
+        User userByEmail = userRepository.findByEmail(email);
+        if (userByEmail == null){
+            return false;
+        }
+        SecureToken secureToken = new SecureToken(userByEmail);
+        confirmationTokenRepository.save(secureToken);
+
+        String message = String.format("Hello, your code: %s", secureToken.getToken());
+        mailSender.send(email, "Reset Password", message);
+        return true;
+    }
+
+    public User checkCode(String code){
+        SecureToken secureToken = confirmationTokenRepository.findByToken(code);
+        System.out.println("CODE!!!!");
+        if (secureToken != null){
+            return secureToken.getUser();
+        }
+        return null;
+    }
+
+
 
     public void addFollower(Long id, User user) {
         User userFromDB = getById(id);

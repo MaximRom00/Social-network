@@ -15,9 +15,9 @@ spring:
           auth: 'true'
 
     host: smtp.mailtrap.io
-    username: 443bee5f602241
-    password: b9ce3f97c923fb
-    port: '2525'
+    username: b21f82e049fbf8
+    password: b19ee18691addb
+    port: '587'
 
 #    Database Mysql
   datasource:

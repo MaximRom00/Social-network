@@ -4,7 +4,10 @@ import by.rom.socialnetwork.model.Message;
 import by.rom.socialnetwork.model.User;
 import by.rom.socialnetwork.repository.MessageRepository;
 import by.rom.socialnetwork.service.CommentService;
+import by.rom.socialnetwork.service.MailSender;
 import by.rom.socialnetwork.service.MessageService;
+import by.rom.socialnetwork.service.UserService;
+import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -22,6 +25,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 import java.util.UUID;
 
 @Controller
@@ -33,14 +37,17 @@ public class MainController {
 
     private final CommentService commentService;
 
-    public MainController(MessageRepository messageRepository, MessageService messageService, CommentService commentService) {
-        this.messageRepository = messageRepository;
-        this.messageService = messageService;
-        this.commentService = commentService;
-    }
+    private final UserService userService;
 
     @Value("${upload.path}")
     private String path;
+
+    public MainController(MessageRepository messageRepository, MessageService messageService, CommentService commentService, UserService userService) {
+        this.messageRepository = messageRepository;
+        this.messageService = messageService;
+        this.commentService = commentService;
+        this.userService = userService;
+    }
 
     @GetMapping("/")
     private String login(){
@@ -103,7 +110,45 @@ public class MainController {
         UriComponents components = UriComponentsBuilder.fromHttpUrl(referer).build();
 
         return "redirect:" + components.getPath();
+    }
 
+    @GetMapping(value = "/forget")
+    public String forgotPassword(){
+        return "forgetPassword";
+    }
+
+    @PostMapping(value = "/forget")
+    public String resetPassword(@RequestParam(name = "email") String email, Model model){
+        boolean isPresentEmail = userService.resetPasswordMessage(email, UUID.randomUUID().toString());
+
+        if (!isPresentEmail){
+            model.addAttribute("error", "Email wasn't found, try again.");
+            return "forgetPassword";
+        }
+
+        return "verifyNewPassword";
+    }
+
+    @PostMapping(value = "/checkCode")
+    public String checkCode(@RequestParam(name = "code") String code, Model model){
+        User user = userService.checkCode(code);
+        if (user != null){
+            model.addAttribute("user", user);
+            return "changePassword";
+        }
+        model.addAttribute("error", "Incorrect code, please repeat.");
+        return "verifyNewPassword";
+    }
+
+    @PostMapping(value = "/savePassword")
+    public String savePassword(@Valid @ModelAttribute(name = "user") User user, BindingResult bindingResult){
+
+        if (bindingResult.hasErrors()){
+            return "changePassword";
+        }
+        user.setActive(true);
+        userService.saveUser(user);
+        return "/login";
     }
 
     private void fileSaving(Message message, MultipartFile file) throws IOException {

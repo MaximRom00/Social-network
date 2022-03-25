@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 
 @Controller
@@ -30,7 +31,6 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-    private final PasswordEncoder encoder;
 
     @GetMapping
     public String allUser(Model model){
@@ -158,7 +158,7 @@ public class UserController {
         return "subscribers";
     }
 
-//    Update authentication to modify profile's image in navbar.
+    //    Update authentication to modify profile's image in navbar.
     private void updateAuthenticatedPrincipal(User authUser) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 

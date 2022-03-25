@@ -12,7 +12,7 @@
         <div class="row content d-flex justify-content-center">
             <div class="col-md-5">
                 <div class="box shadow bg-white p-4">
-                    <h3 class="mb-4 text-center fs-1"th:if="${isRegForm}">Please, Login</h3>
+                    <h3 class="mb-4 text-center fs-1" th:if="${isRegForm}">Please, Login</h3>
                     <h3 class="mb-4 text-center fs-1" th:if="${!isRegForm}">Create Account</h3>
                     <form class="mb-3" th:action="@{${path}}" method="post" th:object="${user}">
 
@@ -77,8 +77,8 @@
                         <div class="form-floating mb-3">
                             <input type="submit" class="btn btn-dark form-control" th:value="${operation}"/>
                         </div>
-                        <div class="forgot-password-link mb-3">
-                            <a href="#" title="Forgot Password" class="text-decoration-none">Forgot Password</a>
+                        <div class="forgot-password-link mb-3" th:if="${isRegForm}">
+                            <a th:href="@{/forget}" title="Forgot Password" class="text-decoration-none">Forgot Password</a>
                         </div>
                         <div class="forgot-password-link mb-3" th:if="${!isRegForm}">
                             <a href="history.go(-1)" title="Back" class="text-decoration-none">Back</a>
