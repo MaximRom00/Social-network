@@ -42,9 +42,24 @@ SpringBoot Social-network
   git clone hhttps://github.com/MaximRom00/Social-network.git
 2. Create Mysql database. Set username and password in src/main/resources/application.yaml
 3. Run this application using maven: Run the app using maven:
-4. ```
+```
 mvn spring-boot:run
 ```
+The app will start running at http://localhost:8081.
+
+# Application is available on Heroku
+Link: https://spring-social-network.herokuapp.com/
+Credentials for Admin:
+- login: Max
+- passwrod: 1
+Credentials for User:
+- login: user
+- passwrod: 2
+Credentials for User:
+- login: anton
+- passwrod: a
+
+# Screenshots
 
 
   
