@@ -34,6 +34,7 @@ SpringBoot Social-network
 - Html, CSS, Bootstrap
 - Flyway Migration
 - Test: JUnit, Mockito
+- MailTrap to get messages
 ### Enviroment
 - Heroku
 
