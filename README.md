@@ -36,3 +36,15 @@ SpringBoot Social-network
 - Test: JUnit, Mockito
 ### Enviroment
 - Heroku
+
+# Run
+1. Download the zip file or clone the repository:
+  git clone hhttps://github.com/MaximRom00/Social-network.git
+2. Create Mysql database. Set username and password in src/main/resources/application.yaml
+3. Run this application using maven: Run the app using maven:
+4. ```
+mvn spring-boot:run
+```
+
+
+  
