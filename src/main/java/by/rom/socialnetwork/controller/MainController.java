@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,7 +26,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 import java.util.UUID;
 
 @Controller
@@ -39,14 +39,17 @@ public class MainController {
 
     private final UserService userService;
 
+    private final PasswordEncoder encoder;
+
     @Value("${upload.path}")
     private String path;
 
-    public MainController(MessageRepository messageRepository, MessageService messageService, CommentService commentService, UserService userService) {
+    public MainController(MessageRepository messageRepository, MessageService messageService, CommentService commentService, UserService userService, PasswordEncoder encoder) {
         this.messageRepository = messageRepository;
         this.messageService = messageService;
         this.commentService = commentService;
         this.userService = userService;
+        this.encoder = encoder;
     }
 
     @GetMapping("/")
@@ -70,7 +73,6 @@ public class MainController {
         model.addAttribute("mess", new Message());
 
         model.addAttribute("page", page);
-        System.out.println("Page - " + page);
         model.addAttribute("totalPages", messages.getTotalPages());
 
         return "main";
@@ -101,7 +103,7 @@ public class MainController {
     }
 
     @PostMapping(value = "/main/comment")
-    public String saveComment( @RequestParam(name = "text") String text,
+    public String saveComment(@RequestParam(name = "text") String text,
                               @RequestParam(name = "id") int id,
                               @RequestHeader(value = "referer", required = false) String referer){
 
@@ -146,7 +148,9 @@ public class MainController {
         if (bindingResult.hasErrors()){
             return "changePassword";
         }
-        user.setActive(true);
+//        user.setActive(true);
+        user.setPassword(encoder.encode(user.getPassword()));
+
         userService.saveUser(user);
         return "/login";
     }

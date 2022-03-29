@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -33,8 +34,8 @@ public class MessageService {
 
     public void modifyLike(User user, long messageId){
         Message message = messageRepository.getById(messageId);
-        List<User> likes = message.getLikes();
-        List<User> dislikes = message.getDislikes();
+        Set<User> likes = message.getLikes();
+        Set<User> dislikes = message.getDislikes();
 
         checkLikeAndDislike(user, message, likes, dislikes);
     }
@@ -42,13 +43,13 @@ public class MessageService {
     public void modifyDislike(User user, long messageId){
         Message message = messageRepository.getById(messageId);
 
-        List<User> dislikes = message.getDislikes();
-        List<User> likes = message.getLikes();
+        Set<User> dislikes = message.getDislikes();
+        Set<User> likes = message.getLikes();
 
         checkLikeAndDislike(user, message, dislikes, likes);
     }
 
-    private void checkLikeAndDislike(User user, Message message, List<User> dislikes, List<User> likes) {
+    private void checkLikeAndDislike(User user, Message message, Set<User> dislikes, Set<User> likes) {
 
         if (likes.contains(user)){
             dislikes.add(user);
@@ -65,7 +66,6 @@ public class MessageService {
 
         messageRepository.save(message);
     }
-
 
     public void deleteById(long id){
         Message byId = messageRepository.getById(id);

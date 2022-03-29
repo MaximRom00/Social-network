@@ -28,7 +28,6 @@ public class UserService implements UserDetailsService {
     private final PasswordEncoder encoder;
 
     public void saveUser(User user){
-        user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
@@ -56,7 +55,7 @@ public class UserService implements UserDetailsService {
             return false;
         }
 
-        user.setActive(true);
+//        user.setActive(true);
         user.setRole(Role.USER);
         user.setPassword(encoder.encode(user.getPassword()));
 
@@ -83,7 +82,7 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    public void updateProfileUser(User user, Role role, boolean isActive) {
+    public void updateProfileUser(User user, Role role, boolean isEnabled) {
 
         if (role != null){
             user.setRole(role);
@@ -91,7 +90,7 @@ public class UserService implements UserDetailsService {
         if (user.getAvatarName().isEmpty()){
             user.setAvatarName(null);
         }
-        user.setActive(isActive);
+        user.setEnabled(isEnabled);
 
         saveUser(user);
     }
@@ -126,14 +125,11 @@ public class UserService implements UserDetailsService {
 
     public User checkCode(String code){
         SecureToken secureToken = confirmationTokenRepository.findByToken(code);
-        System.out.println("CODE!!!!");
         if (secureToken != null){
             return secureToken.getUser();
         }
         return null;
     }
-
-
 
     public void addFollower(Long id, User user) {
         User userFromDB = getById(id);

@@ -6,6 +6,7 @@ import by.rom.socialnetwork.repository.MessageRepository;
 import by.rom.socialnetwork.repository.UserRepository;
 import by.rom.socialnetwork.service.CommentService;
 import by.rom.socialnetwork.service.MessageService;
+import by.rom.socialnetwork.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class MessageController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final MessageService messageService;
     private final CommentService commentService;
 
@@ -38,7 +39,7 @@ public class MessageController {
         Pageable pageable = PageRequest.of(page, 6);
 
         Page<Message> messages = null;
-        User userDB = userRepository.getById(id);
+        User userDB = userService.getById(id);
 
         messages = messageService.messageList(pageable, null, userDB);
 

@@ -83,7 +83,7 @@ public class UserController {
             @AuthenticationPrincipal User authUser,
             @Valid @ModelAttribute(name = "user") User user,
             BindingResult bindingResult, @RequestParam("file") MultipartFile file,
-            @RequestParam(name = "isActive") boolean isActive,
+            @RequestParam(name = "isEnabled") boolean isEnabled,
             @RequestParam(name = "role", required = false) Role role) throws IOException {
 
         if (bindingResult.hasErrors()){
@@ -100,7 +100,7 @@ public class UserController {
             file.transferTo(new File(absolutePath + "/" + fileName));
         }
 
-        userService.updateProfileUser(user, role, isActive);
+        userService.updateProfileUser(user, role, isEnabled);
 
         updateAuthenticatedPrincipal(authUser);
 

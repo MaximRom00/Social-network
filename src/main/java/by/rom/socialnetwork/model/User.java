@@ -17,7 +17,7 @@ import java.util.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"subscribers", "subscriptions", "messages"})
+@ToString(exclude = {"subscribers", "subscriptions", "messages", "senderMessages", "receiverMessages"})
 @EqualsAndHashCode(of = "id")
 public class User implements UserDetails {
 
@@ -39,8 +39,6 @@ public class User implements UserDetails {
     @Transient
     private String rpassword;
 
-    private boolean isActive;
-
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
@@ -50,6 +48,12 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     private List<Message> messages;
+
+    @OneToMany(mappedBy = "sender")
+    private List<PrivateMessage> senderMessages;
+
+    @OneToMany(mappedBy = "receiver")
+    private List<PrivateMessage> receiverMessages;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "subscriptions", joinColumns = {@JoinColumn(name = "user_id")},
@@ -90,6 +94,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return isActive;
+        return isEnabled;
     }
 }

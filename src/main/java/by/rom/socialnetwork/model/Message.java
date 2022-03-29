@@ -5,7 +5,9 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -14,6 +16,16 @@ import java.util.List;
 @Builder
 @ToString(exclude = "author")
 @EqualsAndHashCode(exclude = "author")
+@NamedEntityGraphs({
+        @NamedEntityGraph(
+                name = "entity-graph",
+                attributeNodes = {
+                        @NamedAttributeNode(value = "likes"),
+                        @NamedAttributeNode(value = "dislikes"),
+                        @NamedAttributeNode(value = "comments")
+                }
+        )
+})
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,7 +56,7 @@ public class Message {
             joinColumns = {@JoinColumn(name = "message_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
-    public List<User> likes = new ArrayList<>();
+    public Set<User> likes = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -52,6 +64,6 @@ public class Message {
             joinColumns = {@JoinColumn(name = "message_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
-    public List<User> dislikes = new ArrayList<>();
+    public Set<User> dislikes = new HashSet<>();
 
 }

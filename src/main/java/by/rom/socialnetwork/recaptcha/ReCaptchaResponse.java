@@ -1,4 +1,4 @@
-package by.rom.socialnetwork.model.secutiry;
+package by.rom.socialnetwork.recaptcha;
 
 import lombok.Data;
 

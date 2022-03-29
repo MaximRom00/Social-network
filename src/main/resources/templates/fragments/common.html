@@ -15,9 +15,8 @@
                     <h3 class="mb-4 text-center fs-1" th:if="${isRegForm}">Please, Login</h3>
                     <h3 class="mb-4 text-center fs-1" th:if="${!isRegForm}">Create Account</h3>
                     <form class="mb-3" th:action="@{${path}}" method="post" th:object="${user}">
-
                         <div class="alert alert-danger text-center" th:if="${param.error}">
-                            Invalid username or password.
+                            Invalid username/password or account wasn't activated(check your email).
                         </div>
                         <div class="alert alert-primary text-center" th:if="${param.logout}">
                             You have been logged out.

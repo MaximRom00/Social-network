@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script type="text/javascript" th:src="@{/static/js/actions.js}"></script>
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/message.css}"/>
 
 </head>
 <body>
@@ -24,10 +24,9 @@
                             <img th:if= "${mes.author.avatarName} != null"
                                  th:src="@{/static/icons/{av}(av=${mes.author.avatarName})}" width="43" height="43" class="rounded-circle" alt="Avatar"/>
                             <div class="d-flex flex-column justify-content-start ml-2">
-                                <span class="d-block font-weight-bold name" th:text="${mes.author.name}"></span>
+                                <a class="d-block font-weight-bold name" th:text="${mes.author.name}" th:href="@{/message/{id}/0(id=${mes.author.id})}"></a>
                                 <span class="date text-black-50" th:text="${mes.tag}"></span>
                             </div>
-
                         </div>
 
                         <div class="mb-1">
@@ -152,11 +151,6 @@
                     <div class="bg-light p-2">
 
                         <form action="#" th:method="POST" th:action="@{/main/comment}">
-
-                            <div class="d-flex flex-row align-items-start mb-3 ml-3">
-                                <img class="rounded-circle" src="https://i.imgur.com/RpzrMR2.jpg" width="40">
-                            </div>
-
                                 <div class="form-group">
                                     <textarea type="text" class="form-control ml-1 shadow-none textarea" th:value="*{text}" name="text" placeholder="Write a text..."></textarea>
                                     <input type="hidden" class="form-control" th:value="*{mes.id}" name="id">

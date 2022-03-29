@@ -29,7 +29,7 @@
                                     <div class="my-2" th:if="${isSubscriber} == true">
                                         <a class="btn btn-danger" th:href="@{/user/unfollow/{id}(id=${id})}">Unfollow</a>
                                     </div>
-                                    <button class="btn btn-outline-primary">Message</button>
+                                    <a class="btn btn-outline-primary" th:href="@{/userMessage/{id}(id=${user.id})}">Message</a>
                                 </div>
                             </div>
 

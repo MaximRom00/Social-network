@@ -2,7 +2,7 @@ package by.rom.socialnetwork.controller;
 
 
 import by.rom.socialnetwork.model.User;
-import by.rom.socialnetwork.model.secutiry.ReCaptchaResponse;
+import by.rom.socialnetwork.recaptcha.ReCaptchaResponse;
 import by.rom.socialnetwork.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;

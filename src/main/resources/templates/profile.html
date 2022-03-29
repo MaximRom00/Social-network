@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/st.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/style.css}"/>
 
 </head>
 <body>
@@ -49,7 +49,7 @@
                         </div>
                         <input type="hidden" class="form-control" th:value="*{id}" name="id">
                         <input type="hidden" class="form-control" th:value="*{role}" name="role">
-                        <input type="hidden" class="form-control" th:value="*{isActive}" name="isActive">
+                        <input type="hidden" class="form-control" th:value="*{isEnabled}" name="isEnabled">
                         <input type="hidden" class="form-control" th:value="*{avatarName}" name="avatarName">
 
                         <script type="text/javascript" th:src="@{/static/js/actions.js}" ></script>

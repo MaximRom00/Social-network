@@ -1,9 +1,9 @@
-insert into user (email, is_active, name, password, role, is_enabled)
+insert into user (email, name, password, role, is_enabled)
     VALUE
-    ('admin@admin.com', true, 'Max','$2a$06$8tOeV93mfGYXRAsDvkfc5eMEIdKelAXY3DCM.dp8apSwSjSxxDoDC', 'ADMIN', true),
-    ('user@user.com', true, 'User','$2a$06$yl6YmzQZBkhJOw0.Zfsq7ek9T9Dru.wUI.9kwWqlfW.FD208D1lDy', 'USER', true),
-    ('anton@anton.com', true, 'Anton','$2a$06$5SQMCyk8A0YqNfHvi29.5eBKjl8k/GkFbl9dhHyVyJEdD6JHU7r8G', 'USER', true),
-    ('olga@olga.com', true, 'Olga','$2a$06$YB6cY41qxnUOiwL0xRIYQOJFCM5j94zl9hDINru.YL4apHbHQ5Fsq', 'USER', true);
+    ('admin@admin.com', 'Max','$2a$06$8tOeV93mfGYXRAsDvkfc5eMEIdKelAXY3DCM.dp8apSwSjSxxDoDC', 'ADMIN', true),
+    ('user@user.com', 'User','$2a$06$yl6YmzQZBkhJOw0.Zfsq7ek9T9Dru.wUI.9kwWqlfW.FD208D1lDy', 'USER', true),
+    ('anton@anton.com', 'Anton','$2a$06$5SQMCyk8A0YqNfHvi29.5eBKjl8k/GkFbl9dhHyVyJEdD6JHU7r8G', 'USER', true),
+    ('olga@olga.com',  'Olga','$2a$06$YB6cY41qxnUOiwL0xRIYQOJFCM5j94zl9hDINru.YL4apHbHQ5Fsq', 'USER', true);
 
 insert into message(tag, text, user_id)
     VALUE
