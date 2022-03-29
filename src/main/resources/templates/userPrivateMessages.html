@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/style.css}"/>
+</head>
+<body>
+
+<div th:replace="fragments/theme :: theme"></div>
+
+<main class="content">
+  <div class="container p-0">
+
+    <h1 class="h3 mb-3 d-flex justify-content-center mt-2 mb-2">My Messages</h1>
+
+    <div class="card">
+      <div class="row g-0">
+        <div class="col-12 col-lg-5 col-xl-3 border-right border-bottom">
+
+          <a th:href="@{/userMessage/{id}(id=${receiver.id})}" class="list-group-item list-group-item-action border-0" th:each="receiver : ${receivers}"  th:if="${receiver.name} != ${#authentication.principal.name}">
+            <div class="d-flex align-items-start">
+                <img th:if= "${receiver.avatarName} == null"
+                     th:src="@{/static/icons/avatar.png}" class="rounded-circle mr-1"  width="40" height="40"/>
+                <img th:if= "${receiver.avatarName} != null"
+                     th:src="@{/static/icons/{av}(av=${receiver.avatarName})}" class="rounded-circle mr-1"  width="40" height="40"/>
+              <div class="flex-grow-1 ml-3" th:text="*{receiver.name}">
+              </div>
+            </div>
+          </a>
+          <hr class="d-block d-lg-none mt-1 mb-0">
+        </div>
+
+        <div class="col-12 col-lg-7 col-xl-9">
+          <div class="py-2 px-4 border-bottom d-none d-lg-block">
+            <div class="d-flex align-items-center py-1" >
+              <div class="position-relative" >
+                  <img th:if= "${#authentication.principal.avatarName} == null"
+                       th:src="@{/static/icons/avatar.png}" class="rounded-circle mr-1"  width="40" height="40"/>
+                  <img th:if= "${#authentication.principal.avatarName} != null"
+                       th:src="@{/static/icons/{av}(av=${#authentication.principal.avatarName})}" class="rounded-circle mr-1"  width="40" height="40"/>
+              </div>
+              <div class="flex-grow-1 pl-3" th:text="${#authentication.principal.name}">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>
