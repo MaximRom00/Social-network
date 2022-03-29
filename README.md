@@ -1,2 +1,4 @@
 # Social-network
-Simple social-network
+SpringBoot Social-network
+# Functionality
+### Admin
