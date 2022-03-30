@@ -1,5 +1,5 @@
 # Social-network
-SpringBoot Social-network
+SpringBoot Social-network. 
 # Functionality
 ### Base
 - Login/Logout
@@ -64,6 +64,12 @@ Credentials for User:
 - passwrod: a
 
 # Screenshots
-
-
-  
+### Login Form
+![1 Login Page](https://user-images.githubusercontent.com/95149324/160821883-71a5dbae-e716-4f44-b19a-befeed1bc49f.png)
+### Registration Form
+![2 Registration Form](https://user-images.githubusercontent.com/95149324/160821968-196fadcb-1aaf-4d67-94b9-b7b18f3d0d8e.png)
+### Private message page  
+![4 Private Message](https://user-images.githubusercontent.com/95149324/160822027-ebc36fe0-220b-494b-a2b5-560e6a5e96a5.png)
+### User's profile
+![6 User profile](https://user-images.githubusercontent.com/95149324/160822079-f7e6a5a3-305a-4889-bb0a-84acc55561d3.png)
+### Other screenshots you can see in https://github.com/MaximRom00/Social-network/tree/main/screenshots
