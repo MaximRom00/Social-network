@@ -50,12 +50,15 @@ The app will start running at http://localhost:8081.
 
 # Application is available on Heroku
 Link: https://spring-social-network.herokuapp.com/
+
 Credentials for Admin:
 - login: Max
 - passwrod: 1
+
 Credentials for User:
 - login: user
 - passwrod: 2
+
 Credentials for User:
 - login: anton
 - passwrod: a
